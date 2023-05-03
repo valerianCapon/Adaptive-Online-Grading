@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}Home{% endblock %}
+{% block content %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+
+
+
+<div class="container-fluid">
+    <div class="text-center">
+        {% if user.is_authenticated %}
+        <h1 class="h1 mb-4 mt-3 text-gray-800 font-weight-bold">
+            Welcome {{ user.username }}
+        </h1>
+        {% else %}
+        <h1 class="h1 mb-4 text-gray-800 font-weight-bold">
+            Welcome ... wait ... hey you ! How are you here ? Go login you nobody !!!
+        </h1>
+        {% endif %}
+        <p class="text-center h4" id="texto">
+            Thank you for your participation !
+        </p>
+    </div>
+
+    <div class="card shadow" id="form-container">
+        <div class="card-header">
+            <h4 class="h4 m-0 font-weight-bold text-primary">
+                Select the test's options assigned to you, please.
+            </h4>
+        </div>
+        <div class="container-fluid card-body">
+            <div class="row justify-content-center align-items-center">
+
+                <form method="post">{% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+
+                    <div class="my-1">
+                        {{ form.set_of_color.errors }}
+                        <label class="mr-sm-1 h3"
+                            for="{{ form.set_of_color.id_for_label }} inlineFormCustomSelect">Choose a set of colors
+                        </label>
+                        <hr>
+                        <div class="wrapper">
+                            {% render_field form.set_of_color|append_attr:"id:inlineFormCustomSelect" class="custom-select" %}
+                        </div>
+                    </div>
+                    <div class="my-4"></div>
+
+                    <legend>{{ form.type_of_test.label }}</legend>
+                    <hr>
+                    <div class="wrapper">
+                            {% for radio in form.type_of_test %}
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}" class="option rounded {{ radio.id_for_label }}">
+                                <div class="dot"></div>                                
+                                <span>{{ radio.choice_label }}</span>
+                            </label>
+                            {% endfor %}
+                    </div>
+
+                    <div class="my-4"></div>
+
+                    <input type="submit" id="Start-test" class="btn btn-google btn-lg rounded"  value="Start the test !">
+
+                </form>          
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class=".footer fixed-bottom navbar-light bg-light border">
+    <div class="container my-auto">
+        <div class="text-center my-auto navbar-nav">
+            <p class="h5">Click on me to logout</p>
+            <a class="nav-link h5" href="{% url 'logout' %}">
+
+                <img src='{% static "random_dog.jpg" %}' alt="cute dogo" class="rounded img-fluid" id="cute-dogo">
+
+            </a>
+        </div>
+    </div>
+</footer>
+
+<nav class="navbar fixed-bottom navbar-expand navbar-light bg-light align-items-center justify-content-center">
+    <ul class="navbar-nav mr-auto ">
+
+
+    </ul>
+</nav>
+
+
+{% endblock %}
