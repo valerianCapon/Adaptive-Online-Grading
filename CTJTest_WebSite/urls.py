@@ -15,9 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from django.views.generic.base import TemplateView
 
 from . import views
 
@@ -26,15 +25,13 @@ urlpatterns = [
 
     #Webpages
     path('', views.IndexView.as_view(), name="index"),
-    path('rubric-tutorial/', views.RubricTutorialView.as_view(), name="rubric_tutorial"),
-    path('rubric-test/', views.RubricTestView.as_view(), name="rubric_test"),
     path('thank-you/', views.ThankYouView.as_view(), name="thank_you"),
 
+    #URL route to color tests
+    path("", include('CTJTest_WebSite.apps.colorTestApp.urls')),
 
     #Django Auth
     path('login', auth_views.LoginView.as_view(template_name="login.html"), name="login"),
     path('logout', auth_views.LogoutView.as_view(), name="logout")
 
-
-    # path('', TemplateView.as_view(template_name="index.html"), name="index")
 ]
