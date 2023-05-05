@@ -1,5 +1,5 @@
 """
-ASGI config for TCJTest_WebSite project.
+ASGI config for CTJTest_WebSite project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TCJTest_WebSite.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CTJTest_WebSite.settings')
 
 application = get_asgi_application()

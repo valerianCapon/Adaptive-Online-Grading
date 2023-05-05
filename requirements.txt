@@ -1,7 +1,8 @@
-asgiref==3.6.0
-autopep8==2.0.2
-Django==4.2
-django-widget-tweaks==1.4.12
-pycodestyle==2.10.0
-sqlparse==0.4.4
-tomli==2.0.1
+# asgiref==3.6.0 # req-auto-cleaner: commented for deletion
+Django==4.2.1
+django-colorfield==0.8.0 # req-auto-cleaner: check package usage manually # req-auto-cleaner: check package usage manually
+django-widget-tweaks==1.4.12 # req-auto-cleaner: check package usage manually # req-auto-cleaner: check package usage manually
+# Pillow==9.5.0 # req-auto-cleaner: commented for deletion
+# sqlparse==0.4.4 # req-auto-cleaner: commented for deletion
+systemd-python==234 # req-auto-cleaner: check package usage manually # req-auto-cleaner: check package usage manually
+virtualenv-clone==0.3.0 # req-auto-cleaner: check package usage manually # req-auto-cleaner: check package usage manually

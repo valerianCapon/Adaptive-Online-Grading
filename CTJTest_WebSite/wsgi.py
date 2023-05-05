@@ -1,5 +1,5 @@
 """
-WSGI config for TCJTest_WebSite project.
+WSGI config for CTJTest_WebSite project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TCJTest_WebSite.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CTJTest_WebSite.settings')
 
 application = get_wsgi_application()

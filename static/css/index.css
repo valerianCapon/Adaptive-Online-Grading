@@ -91,7 +91,7 @@ input[type="radio"] {
 #id_type_of_test_0:checked:checked~.id_type_of_test_0 span,
 #id_type_of_test_1:checked:checked~.id_type_of_test_1 span,
 #id_type_of_test_2:checked:checked~.id_type_of_test_2 span {
-    color: #fff;
+    color: #ffffff;
 }
 
 
