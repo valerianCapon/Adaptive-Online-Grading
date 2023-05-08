@@ -1,3 +1,7 @@
 {
-    "editor.guides.bracketPairs": "active"
+    "editor.guides.bracketPairs": "active",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.formatting.provider": "none"
 }
