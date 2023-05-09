@@ -69,7 +69,7 @@ class ColorRubricAssmt(models.Model):
     color_set_assmt = models.ForeignKey(ColorSetAssmt, on_delete=models.CASCADE, related_name="of_ColorSetAssmt")
     
 
-    color = models.ForeignKey(Color)
+    color = models.ForeignKey(Color, on_delete=models.PROTECT)
     shade_guessed = models.SmallIntegerField(blank=True, null=True, validators=COLOR_VALIDATOR)
 
     time_start = models.DateTimeField(blank=True, null=True)
@@ -89,7 +89,7 @@ class ColorSet(models.Model):
     description = models.TextField(max_length=200, blank=True) 
 
     colors = models.ManyToManyField(Color)
-    quantityOfColors = models.SmallIntegerField(validators=MinValueValidator(0), default=0)
+    quantityOfColors = models.SmallIntegerField(validators=[MinValueValidator(0)], default=0)
 
 
     def __str__(self) -> str:

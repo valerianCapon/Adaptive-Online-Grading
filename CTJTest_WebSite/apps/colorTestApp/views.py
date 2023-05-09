@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import RubricForm
 
-# Create your views here.
+# Rubric Views
 class RubricTutorialView(LoginRequiredMixin, FormView):
     form_class = RubricForm
     template_name = 'rubric_tutorial.html'
