@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import RubricForm
+from .models import ColorSetAssessment
+
 
 # Rubric Views
 class RubricTutorialView(LoginRequiredMixin, FormView):

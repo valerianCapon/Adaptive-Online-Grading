@@ -2,10 +2,32 @@
 {% load static %}
 {% load widget_tweaks %}
 
-
 {% block title %}Rubric Test{% endblock %}
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link href="{% static 'css/rubric_test.css' %}" rel="stylesheet">
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">Static Backdrop</h4>
+        </div>
+        <div class="modal-body">
+          <p>You cannot click outside of this modal to close it.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 <div class="container-fluid">
     <div class="align-items-center text-center">
@@ -76,6 +98,18 @@
 
 </div>
 
+
+
+
+
+
+
+
+<script>
+    $(window).on('load', function() {
+        $('#myModal').modal('show');
+    });
+</script>
 
 
 {% endblock %}
