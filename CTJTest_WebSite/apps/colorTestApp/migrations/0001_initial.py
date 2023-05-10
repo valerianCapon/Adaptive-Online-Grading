@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('judge', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='is_User', to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.CreateModel(
+        migrations.CreateModel(     
             name='ColorSet',
             fields=[
                 ('name', models.CharField(max_length=25, primary_key=True, serialize=False, unique=True)),
