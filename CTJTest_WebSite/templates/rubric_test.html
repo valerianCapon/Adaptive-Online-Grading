@@ -8,26 +8,21 @@
 <link href="{% static 'css/rubric_test.css' %}" rel="stylesheet">
 
 
- <!-- Modal -->
- <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Static Backdrop</h4>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content align-items-center">
+            <div class="modal-title text-center"><hr><h4> Timer will start when you click on "READY !"<hr></h4></div>
+            <div class="modal-body">
+                <input type="submit" id="modal-btn" class=" btn btn-google btn-lg rounded" data-dismiss="modal"
+                value="READY !">
+            </div>
+            <div class="modal-footer"><hr></div>
         </div>
-        <div class="modal-body">
-          <p>You cannot click outside of this modal to close it.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
     </div>
-  </div>
+</div>
 
 <div class="container-fluid">
     <div class="align-items-center text-center">
@@ -41,20 +36,20 @@
                     Please README !
                 </h4>
             </div>
-            
+
             <p>
-                <div class="my-1"></div>
-                Rubric tests are straightforward assessments, akin to a teacher grading a student's work.<br>
-                 In this test, your task is to evaluate the color value displayed,<br> 
-                 with 0 indicating the brightest white and 255 representing the darkest black shade.
+            <div class="my-1"></div>
+            Rubric tests are straightforward assessments, akin to a teacher grading a student's work.<br>
+            In this test, your task is to evaluate the color value displayed,<br>
+            with 0 indicating the brightest white and 255 representing the darkest black shade.
             </p>
             <p>
                 Take your time during the evaluation and do not rush it,
-                  this is not a speed test. <br>
-                  However, please avoid engaging in other activities,
-                   as time is an important factor in this study. <br>
-                    If you encounter any issues or take a break during one of your tests,
-                     simply refresh the page and start again, the timer will reset.
+                this is not a speed test. <br>
+                However, please avoid engaging in other activities,
+                as time is an important factor in this study. <br>
+                If you encounter any issues or take a break during one of your tests,
+                simply refresh the page and start again, the timer will reset.
             </p>
             And again thank you for your participation!
             <div class="my-1"></div>
@@ -65,33 +60,34 @@
     <div class="card shadow align-items-center row">
 
         <div>
-            <div  class="box pink rounded" style="background-color:{{color_to_test}}"></div>
+            <div class="box pink rounded" style="background-color:{{color_to_test}}"></div>
         </div>
 
-        
+
         <div>
             <form method="post" class="text-center user">
                 {% csrf_token %}
-                
+
                 {% for hidden in form.hidden_fields %}
                 {{ hidden }}
                 {% endfor %}
-                
+
                 {% for field in form.visible_fields %}
                 <div class="form-group text-center">
-                    <label class="mr-sm-1 h3" for="{{ field.id_for_label }}">What shade of grey is it ? ( 0 - 255) </label>
+                    <label class="mr-sm-1 h3" for="{{ field.id_for_label }}">What shade of grey is it ? ( 0 - 255)
+                    </label>
                     {% render_field form.color_judgement|append_attr:"id:numberField" class='text-gray-800 text-center form-control form-control-user' %}
                     <!-- {{ field | add_class:'text-gray-800 text-center form-control form-control-user' }} -->
-                    {% for error in field.errors %} 
+                    {% for error in field.errors %}
                     <span class="help-block">{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% endfor %}
 
-                <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded"  value="Confirm">
+                <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded" value="Confirm">
 
             </form>
-            
+
         </div>
         <div class="my-2"></div>
     </div>
@@ -106,7 +102,7 @@
 
 
 <script>
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         $('#myModal').modal('show');
     });
 </script>
