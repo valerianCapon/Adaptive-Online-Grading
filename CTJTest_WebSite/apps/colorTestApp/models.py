@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -28,13 +29,14 @@ class ColorSet(models.Model):
     name = models.CharField(primary_key=True, max_length=25)
     description = models.TextField(max_length=200, blank=True)
     colors = models.ManyToManyField(Color, blank=True, related_name='color_sets')
-    quantity_of_colors = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self) -> str:
         return self.name
+    
 
 
 class ColorSetAssessment(models.Model):
+    """ name = judge + type + date """
     name = models.CharField(primary_key=True, max_length=200)
     TYPE_CHOICES = [("r", "Rubric"), ("a", "ACJ"), ("t", "CTJ")]
     type = models.CharField(
@@ -42,6 +44,12 @@ class ColorSetAssessment(models.Model):
         choices=TYPE_CHOICES,
         default="r",
         verbose_name="Type of the test",
+    )
+    color_set = models.ForeignKey(
+        ColorSet, 
+        on_delete=models.PROTECT, 
+        related_name="assessments",
+        verbose_name="Color Set",
     )
     judge = models.ForeignKey(
         User,
@@ -88,6 +96,9 @@ class ColorRubricAssessment(models.Model):
     time_start = models.DateTimeField(blank=True, null=True)
     time_end = models.DateTimeField(blank=True, null=True)
     duration = models.DurationField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Color Rubric Assessment"
 
     def __str__(self) -> str:
         return self.name
