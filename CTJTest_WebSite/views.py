@@ -1,8 +1,9 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.timezone import now
+
 from .apps.colorTestApp.models import ColorSet, ColorSetAssessment
-from datetime import datetime
 from .forms import IndexForm
 
 class IndexView(LoginRequiredMixin, FormView):
@@ -12,19 +13,20 @@ class IndexView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form: IndexForm):
         type_of_test = form.cleaned_data["type_of_test"]
-        # color_set_selected = form.cleaned_data["color_set"]
+        name_of_color_set_selected = form.cleaned_data["color_set"]
+ 
+        current_color_set = ColorSet.objects.get(name=name_of_color_set_selected)
+        current_user = self.request.user
+        current_datetime = now()
 
-        # current_user = self.request.user
-
-        # color_set_assessement = ColorSetAssessment.objects.create(
-        #     name = current_user.username + type_of_test,
-        #     type = type_of_test,
-        #     judge = self.request.user,
-        #     nb_of_assmnt_max = 5, #TODO: define a nb max
-        # )
-        # color_set_assessement.name += color_set_assessement.date_started
-
-        # color_set_assessement.save()
+        ColorSetAssessment.objects.create(
+            name = current_user.username + type_of_test + str(current_datetime),
+            type = type_of_test,
+            color_set = current_color_set,
+            judge = self.request.user,
+            date_started = current_datetime,
+            nb_of_assmnt_max = 5, #TODO: define a nb max
+        )
 
         if(type_of_test == 'r'):
             self.success_url = "rubric-tutorial/" 

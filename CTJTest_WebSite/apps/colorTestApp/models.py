@@ -58,7 +58,7 @@ class ColorSetAssessment(models.Model):
         verbose_name="The user who assessed the color set",
     )
     date_started = models.DateTimeField(
-        auto_now_add=True, verbose_name="Start date of the test"
+        verbose_name="Start date of the test"
     )
     date_ended = models.DateTimeField(
         blank=True, null=True, verbose_name="End date of the test"
