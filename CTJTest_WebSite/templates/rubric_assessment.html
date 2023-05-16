@@ -2,10 +2,10 @@
 {% load static %}
 {% load widget_tweaks %}
 
-{% block title %}Rubric Test{% endblock %}
+{% block title %}Rubric Assessment{% endblock %}
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link href="{% static 'css/rubric_test.css' %}" rel="stylesheet">
+<link href="{% static 'css/rubric_assessment.css' %}" rel="stylesheet">
 
 
 <!-- Modal -->
@@ -14,12 +14,23 @@
 
         <!-- Modal content-->
         <div class="modal-content align-items-center">
-            <div class="modal-title text-center"><hr><h4> Timer will start when you click on "READY !"<hr></h4></div>
-            <div class="modal-body">
-                <input type="submit" id="modal-btn" class=" btn btn-google btn-lg rounded" data-dismiss="modal"
-                value="READY !">
+            <div class="modal-title text-center">
+                <hr>
+                <h4> Timer will start when you click on "READY !"
+                    <hr>
+                </h4>
             </div>
-            <div class="modal-footer"><hr></div>
+            <div class="modal-body">
+
+                <input type="submit" id="modal-btn" class=" btn btn-google btn-lg rounded"
+                    data-dismiss="modal" value="READY !"
+                    onclick="sendReady();">
+                
+
+            </div>
+            <div class="modal-footer">
+                <hr>
+            </div>
         </div>
     </div>
 </div>
@@ -27,7 +38,7 @@
 <div class="container-fluid">
     <div class="align-items-center text-center">
         <h1 class="h1 mb-4 mt-3 text-gray-900 font-weight-bold">
-            Rubric Test
+            Rubric Assessment
         </h1>
 
         <div class="card shadow text-gray-800 h3" id="explanation">
@@ -39,16 +50,16 @@
 
             <p>
             <div class="my-1"></div>
-            Rubric tests are straightforward assessments, akin to a teacher grading a student's work.<br>
-            In this test, your task is to evaluate the color value displayed,<br>
+            Rubric Assessment are very simple, akin to a teacher grading a student's work.<br>
+            In this assessment, your task is to evaluate the color value displayed,<br>
             with 0 indicating the brightest white and 255 representing the darkest black shade.
             </p>
             <p>
                 Take your time during the evaluation and do not rush it,
-                this is not a speed test. <br>
+                this is not a speed race. <br>
                 However, please avoid engaging in other activities,
                 as time is an important factor in this study. <br>
-                If you encounter any issues or take a break during one of your tests,
+                If you encounter any issues or take a break during one of your assessments,
                 simply refresh the page and start again, the timer will reset.
             </p>
             And again thank you for your participation!
@@ -100,11 +111,31 @@
 
 
 
-
 <script>
     $(window).on('load', function () {
-        $('#myModal').modal('show');
+        $('#myModal').modal({ backdrop: 'static', keyboard: false, show: true });
     });
+    function sendReady() {
+        console.log("J'ENVOIE MON POST C EST COOL");
+
+        $.ajax({
+            type:'POST',
+            url:'',
+            data:{
+                ready:"startazeza",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function () {
+                console.log("LE POST EST UN SUCCEEEEEEEEE")
+            },
+            error: function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+
+        console.log("J'ENVOIE MON POST C EST COOL");
+    }
+
 </script>
 
 

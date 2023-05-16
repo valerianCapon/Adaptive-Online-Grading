@@ -36,7 +36,7 @@ class ColorSet(models.Model):
 
 
 class ColorSetAssessment(models.Model):
-    """ name = judge + type + date """
+    """ name = judge_type_date """
     name = models.CharField(primary_key=True, max_length=200)
     TYPE_CHOICES = [("r", "Rubric"), ("a", "ACJ"), ("t", "CTJ")]
     type = models.CharField(
@@ -81,6 +81,7 @@ class ColorSetAssessment(models.Model):
 
 
 class ColorRubricAssessment(models.Model):
+    #SetAssessment's name + color's hex code
     name = models.CharField(primary_key=True, max_length=100)
     color_set_assmt = models.ForeignKey(
         ColorSetAssessment,

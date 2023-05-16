@@ -1,3 +1,5 @@
+from typing import Any
+from django.http import HttpRequest, HttpResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,7 +22,7 @@ class IndexView(LoginRequiredMixin, FormView):
         current_datetime = now()
 
         ColorSetAssessment.objects.create(
-            name = current_user.username + type_of_test + str(current_datetime),
+            name = current_user.username + "_" + type_of_test + "_" + str(current_datetime),
             type = type_of_test,
             color_set = current_color_set,
             judge = self.request.user,
