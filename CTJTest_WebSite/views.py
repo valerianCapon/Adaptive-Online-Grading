@@ -27,8 +27,7 @@ class IndexView(LoginRequiredMixin, FormView):
             color_set = current_color_set,
             judge = self.request.user,
             date_started = current_datetime,
-            nb_of_assmnt_max = 5, #TODO: define a nb max
-        )
+        ).create_assmnts()
 
         if(type_of_test == 'r'):
             self.success_url = "rubric-tutorial/" 

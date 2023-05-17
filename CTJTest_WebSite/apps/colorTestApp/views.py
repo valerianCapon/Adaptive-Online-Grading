@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import RubricForm, ReadyForm
+from .forms import RubricForm
 from .models import ColorRubricAssessment
 from django.utils.timezone import now
 
@@ -34,7 +34,7 @@ class RubricAssessmentView(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if 'ready' in request.POST and 'start' is request.POST['ready'] :
+        if 'ready' in request.POST and 'start' in request.POST['ready'] :
             print("IL C EST PASSER UN TRUC -----------------------------------------------------------")
             self.begin_Assessment()
         elif 'color_judgement' not in request.POST: 
@@ -45,7 +45,6 @@ class RubricAssessmentView(LoginRequiredMixin, FormView):
     def begin_Assessment(self):
         # if not request.user.is_authenticated: #TODO: Check if the authentification work properly
         #     return self.handle_no_permission()
-        self.button_clicked = True
         print("GROS CACA TOUT POURRIE SES GRAND MORTS")
         # current_datetime = now()
 

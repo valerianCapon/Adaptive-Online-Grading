@@ -8,6 +8,8 @@
 <link href="{% static 'css/rubric_assessment.css' %}" rel="stylesheet">
 
 
+
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -22,7 +24,7 @@
             </div>
             <div class="modal-body">
 
-                <input type="submit" id="modal-btn" class=" btn btn-google btn-lg rounded"
+                <input type="submit" id="modal-btn" class="confirm-btn btn btn-google btn-lg rounded "
                     data-dismiss="modal" value="READY !"
                     onclick="sendReady();">
                 
@@ -95,7 +97,7 @@
                 </div>
                 {% endfor %}
 
-                <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded" value="Confirm">
+                <input type="submit" class="btn btn-google btn-lg rounded confirm-btn" value="Confirm">
 
             </form>
 
@@ -104,38 +106,26 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
 <script>
     $(window).on('load', function () {
         $('#myModal').modal({ backdrop: 'static', keyboard: false, show: true });
     });
     function sendReady() {
-        console.log("J'ENVOIE MON POST C EST COOL");
-
         $.ajax({
-            type:'POST',
-            url:'',
-            data:{
-                ready:"startazeza",
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            type: 'POST',
+            url: '',
+            data: {
+                ready: "start",
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function () {
-                console.log("LE POST EST UN SUCCEEEEEEEEE")
+                console.log("post is a success")
             },
-            error: function(xhr,errmsg,err) {
-                console.log(xhr.status + ": " + xhr.responseText);
+            error: function (xhr, errmsg, err) {
+                location.reload();
             }
         });
-
-        console.log("J'ENVOIE MON POST C EST COOL");
     }
-
 </script>
 
 

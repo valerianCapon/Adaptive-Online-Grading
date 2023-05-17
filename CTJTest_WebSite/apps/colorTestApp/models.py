@@ -1,9 +1,9 @@
-from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from colorfield.fields import ColorField
 from collections import namedtuple
+from rubric_assessments import generate_assessments
 
 
 class Color(models.Model):
@@ -24,7 +24,6 @@ class Color(models.Model):
         green = int(self.color_code[4:6], 16)
         return namedtuple("RGB", ["red", "blue", "green"])(red=red, blue=blue, green=green)
 
-
 class ColorSet(models.Model):
     name = models.CharField(primary_key=True, max_length=25)
     description = models.TextField(max_length=200, blank=True)
@@ -33,7 +32,6 @@ class ColorSet(models.Model):
     def __str__(self) -> str:
         return self.name
     
-
 
 class ColorSetAssessment(models.Model):
     """ name = judge_type_date """
@@ -70,14 +68,19 @@ class ColorSetAssessment(models.Model):
         default=0, verbose_name="Number of assessments done"
     )
     nb_of_assmnt_max = models.PositiveSmallIntegerField(
-        default=0, verbose_name="Maximum number of assessments allowed"
+        default=5, verbose_name="Maximum number of assessments allowed"
     )
 
     class Meta:
         verbose_name_plural = "Color Set Assessments"
+        get_latest_by = "date_started"
+        ordering = ["date_started", "judge"]
 
     def __str__(self) -> str:
         return self.name
+    
+    def create_assmnts(self):
+        generate_assessments(self)
 
 
 class ColorRubricAssessment(models.Model):
@@ -100,8 +103,13 @@ class ColorRubricAssessment(models.Model):
 
     class Meta:
         verbose_name_plural = "Color Rubric Assessment"
+        get_latest_by = "time_start"
 
     def __str__(self) -> str:
         return self.name
+
+    def get_judge(self):
+        return self.color_set_assmt.judge
+    
     
 

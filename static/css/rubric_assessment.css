@@ -97,16 +97,16 @@ body {
     border-color: #fdf6e3;
 }
 
-#confirm-btn:hover {
-    color: #eee7d4;
-    background-color: #c8291b;
-    border-color: #8e8888;
+.confirm-btn:hover {
+    color: #eee7d4 !important;
+    background-color: #c8291b !important;
+    border-color: #8e8888 !important;
 }
 
-#confirm-btn:active {
-    color: #c8291b;
-    background-color: #eee7d4;
-    border-color: #000000;
+.confirm-btn:active {
+    color: #c8291b !important;
+    background-color: #eee7d4 !important;
+    border-color: #000000 !important;
 }
 
 .modal-content {
