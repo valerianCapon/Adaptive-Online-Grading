@@ -22,12 +22,12 @@ class IndexView(LoginRequiredMixin, FormView):
         current_datetime = now()
 
         ColorSetAssessment.objects.create(
-            name = current_user.username + "_" + type_of_test + "_" + str(current_datetime),
+            name = current_user.username + "_" + type_of_test + "_" + name_of_color_set_selected + "_" + str(current_datetime),
             type = type_of_test,
             color_set = current_color_set,
             judge = self.request.user,
             date_started = current_datetime,
-        ).create_assmnts()
+        ).create_assessments()
 
         if(type_of_test == 'r'):
             self.success_url = "rubric-tutorial/" 

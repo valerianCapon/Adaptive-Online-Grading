@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from colorfield.fields import ColorField
 from collections import namedtuple
-from rubric_assessments import generate_assessments
+
+
 
 
 class Color(models.Model):
@@ -24,6 +25,7 @@ class Color(models.Model):
         green = int(self.color_code[4:6], 16)
         return namedtuple("RGB", ["red", "blue", "green"])(red=red, blue=blue, green=green)
 
+
 class ColorSet(models.Model):
     name = models.CharField(primary_key=True, max_length=25)
     description = models.TextField(max_length=200, blank=True)
@@ -31,7 +33,7 @@ class ColorSet(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
 
 class ColorSetAssessment(models.Model):
     """ name = judge_type_date """
@@ -74,19 +76,55 @@ class ColorSetAssessment(models.Model):
     class Meta:
         verbose_name_plural = "Color Set Assessments"
         get_latest_by = "date_started"
-        ordering = ["date_started", "judge"]
+        ordering = ["date_started"]
 
     def __str__(self) -> str:
         return self.name
     
-    def create_assmnts(self):
-        generate_assessments(self)
+    
+    def create_assessments(self):
+        self.nb_of_assmnt_max = self.get_nb_max_of_assment()
+        list_of_colors = self.color_set.colors.all()
+        print(list_of_colors) #TODO: à supr
+
+        match self.type:
+            #Rubric type of assessments
+            case "r":
+                for set_nb, color in zip(range(1,self.nb_of_assmnt_max), list_of_colors):
+                    print("creation of assesment nb =", set_nb," and color =",color.name) #TODO
+                    ColorRubricAssessment.objects.create(
+                        name = self.name + color.color_code,
+                        color_set_assessment = self,
+                        color = color,
+                    )
+            #TODO
+            case "t":
+                print("----------------- TODO -----------------")
+            case "a":
+                print("----------------- TODO -----------------")
+                                
+
+    def get_nb_max_of_assment(self) -> int:
+        nb_of_assment = self.nb_of_assmnt_max
+        match self.type:
+            case "r":
+                nb_of_assment = self.color_set.colors.count()
+                
+            #TODO: Set nb_max_of_assessments
+            case "t":
+                pass
+            case "a":
+                pass
+        
+        print("NB OF ASSMENT MAX CALCULER = ",nb_of_assment) #TODO
+        return nb_of_assment
+
 
 
 class ColorRubricAssessment(models.Model):
     #SetAssessment's name + color's hex code
     name = models.CharField(primary_key=True, max_length=100)
-    color_set_assmt = models.ForeignKey(
+    color_set_assessment = models.ForeignKey(
         ColorSetAssessment,
         on_delete=models.CASCADE,
         related_name="rubric_assessments",
