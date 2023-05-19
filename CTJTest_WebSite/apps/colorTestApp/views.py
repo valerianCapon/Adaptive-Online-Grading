@@ -29,28 +29,21 @@ class RubricAssessmentView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('thank_you') #TODO:sûre ? 
     context_object_name = "rubric_assessment"
     color_rubric_assessment = None  #Is set within override of setup()
+    type_of_assessment = 'r'
      
     def setup(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
         super().setup(request, *args, **kwargs)
-        self.color_rubric_assessment = ColorRubricAssessment.objects.filter(
-            color_set_assessment = ColorSetAssessment.objects.filter(
-                judge= self.request.user,
-                type='r',
-                date_ended = None,
-            ).latest('date_started'),
-            time_end = None,
-            ).latest('time_start')
+        self.color_rubric_assessment = ColorSetAssessment.get_last_assessment_from_user(
+                                            self.request.user, self.type_of_assessment )
 
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         
         current_user = self.request.user
-        current_color_set_assessment = ColorSetAssessment.objects.filter(
-            judge=current_user,
-            type='r',
-            date_ended = None,
-        )
+        current_color_set_assessment = ColorSetAssessment.get_last_from_user(current_user, self.type_of_assessment)
+
+        
         print("CURRENT COLOR SET ASSMNT = ", current_color_set_assessment.all()) #TODO:supr
         current_color_set_assessment = current_color_set_assessment.latest('date_started')
 

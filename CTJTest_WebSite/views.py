@@ -21,6 +21,8 @@ class IndexView(LoginRequiredMixin, FormView):
         current_user = self.request.user
         current_datetime = now()
 
+        
+
         ColorSetAssessment.objects.create(
             name = current_user.username + "_" + type_of_test + "_" + name_of_color_set_selected + "_" + str(current_datetime),
             type = type_of_test,

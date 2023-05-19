@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from colorfield.fields import ColorField
 from collections import namedtuple
-
+from django.utils.decorators import classonlymethod
 
 
 
@@ -118,6 +118,22 @@ class ColorSetAssessment(models.Model):
         
         print("NB OF ASSMENT MAX CALCULER = ",nb_of_assment) #TODO
         return nb_of_assment
+    
+    @classonlymethod
+    def get_last_from_user(user:User, type_of_assessment):
+        return ColorSetAssessment.objects.filter(
+                judge= user,
+                type= type_of_assessment,
+                ).latest('date_started')
+    
+    @classonlymethod
+    def get_last_assessment_from_user(user:User, type_of_assessment):
+        return ColorRubricAssessment.objects.filter(
+                color_set_assessment = ColorSetAssessment.get_last_from_user(
+                                                            user,
+                                                            type_of_assessment,
+                                                            )
+                ).latest('time_start')
 
 
 
@@ -148,6 +164,9 @@ class ColorRubricAssessment(models.Model):
 
     def get_judge(self):
         return self.color_set_assmt.judge
+    
+ 
+
     
     
 
