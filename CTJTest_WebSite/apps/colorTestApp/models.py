@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from colorfield.fields import ColorField
 from collections import namedtuple
-from django.utils.decorators import classonlymethod
-
+from django.db.models import F as DjangoF
+from django.utils.timezone import now
+from datetime import timedelta
 
 
 class Color(models.Model):
@@ -66,10 +67,10 @@ class ColorSetAssessment(models.Model):
     assessments_duration = models.DurationField(
         blank=True, null=True, verbose_name="Duration of assessments"
     )
-    nb_of_assmnt = models.PositiveSmallIntegerField(
+    nb_of_assessement = models.PositiveSmallIntegerField(
         default=0, verbose_name="Number of assessments done"
     )
-    nb_of_assmnt_max = models.PositiveSmallIntegerField(
+    nb_of_assessement_max = models.PositiveSmallIntegerField(
         default=5, verbose_name="Maximum number of assessments allowed"
     )
 
@@ -83,17 +84,18 @@ class ColorSetAssessment(models.Model):
     
     
     def create_assessments(self):
-        self.nb_of_assmnt_max = self.get_nb_max_of_assment()
+        self.nb_of_assessement_max = self.get_nb_max_of_assessment()
         list_of_colors = self.color_set.colors.all()
-        print(list_of_colors) #TODO: à supr
+        print(list_of_colors) #TODO:supr
 
         match self.type:
             #Rubric type of assessments
             case "r":
-                for set_nb, color in zip(range(1,self.nb_of_assmnt_max), list_of_colors):
-                    print("creation of assesment nb =", set_nb," and color =",color.name) #TODO
+                self.nb_of_assessement_max = list_of_colors.count()
+                for set_nb, color in zip(range(1,self.nb_of_assessement_max+1), list_of_colors):
+                    print("creation of assesment nb =", set_nb," and color =",color.name) #TODO:supr
                     ColorRubricAssessment.objects.create(
-                        name = self.name + color.color_code,
+                        name = self.name + "---" + color.name,
                         color_set_assessment = self,
                         color = color,
                     )
@@ -102,13 +104,15 @@ class ColorSetAssessment(models.Model):
                 print("----------------- TODO -----------------")
             case "a":
                 print("----------------- TODO -----------------")
+        
+        self.save()
                                 
 
-    def get_nb_max_of_assment(self) -> int:
-        nb_of_assment = self.nb_of_assmnt_max
+    def get_nb_max_of_assessment(self) -> int:
+        nb_of_assessement = self.nb_of_assessement_max
         match self.type:
             case "r":
-                nb_of_assment = self.color_set.colors.count()
+                nb_of_assessement = self.color_set.colors.count()
                 
             #TODO: Set nb_max_of_assessments
             case "t":
@@ -116,25 +120,46 @@ class ColorSetAssessment(models.Model):
             case "a":
                 pass
         
-        print("NB OF ASSMENT MAX CALCULER = ",nb_of_assment) #TODO
-        return nb_of_assment
+        print("NB OF assessement MAX CALCULER = ",nb_of_assessement) #TODO:supr
+        return nb_of_assessement
     
-    @classonlymethod
-    def get_last_from_user(user:User, type_of_assessment):
-        return ColorSetAssessment.objects.filter(
-                judge= user,
-                type= type_of_assessment,
-                ).latest('date_started')
+    @staticmethod
+    def get_earliest_from_user(user:User, type_of_assessment, set_of_color:ColorSet = None):
+        if set_of_color is None:    
+            color_set_assessments = ColorSetAssessment.objects.filter(
+                    judge = user, type = type_of_assessment)
+        else:
+            color_set_assessments = ColorSetAssessment.objects.filter(
+                    judge = user, type = type_of_assessment, color_set = set_of_color)
+        color_set_assessments.query.add_ordering(DjangoF('date_started').desc())
+        return color_set_assessments.first()
     
-    @classonlymethod
-    def get_last_assessment_from_user(user:User, type_of_assessment):
-        return ColorRubricAssessment.objects.filter(
-                color_set_assessment = ColorSetAssessment.get_last_from_user(
+    
+    @staticmethod
+    def get_earliest_assessment_from_user(user:User, type_of_assessment):
+        assessments = ColorRubricAssessment.objects.filter(
+                color_set_assessment = ColorSetAssessment.get_earliest_from_user(
                                                             user,
                                                             type_of_assessment,
-                                                            )
-                ).latest('time_start')
+                                                            ),
+                time_end = None
+        )
+        assessments.query.add_ordering(DjangoF('time_start').desc(nulls_last=True))
+        print("ALL OF THE ASSESSMENTS ARE =",assessments.all()) #TODO:supr
+        print("first ASSESSMENT IS =",assessments.first()) #TODO:supr
+        return assessments.first()
+    
+    def is_finished(self):
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF SET ASSESSEMENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        assessments = ColorRubricAssessment.objects.filter(color_set_assessment=self)
+        duration = timedelta(seconds=0)
+        for assessement in assessments:
+            duration += assessement.duration
+        self.assessments_duration = duration
+        print("DURATION TOTAL =",duration)
 
+        self.date_ended = now()
+        self.save()
 
 
 class ColorRubricAssessment(models.Model):
