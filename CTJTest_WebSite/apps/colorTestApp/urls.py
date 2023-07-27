@@ -8,6 +8,6 @@ urlpatterns = [
     path('rubric-tutorial/', views.RubricTutorialView.as_view(), name="rubric_tutorial"),
     path('rubric-assessment/', views.RubricAssessmentView.as_view(), name="rubric_assessment"),
     #ACJ
-
+    path('acj-tutorial/', views.AcjTutorialView.as_view(), name="acj_tutorial"),
     #CTJ
 ]

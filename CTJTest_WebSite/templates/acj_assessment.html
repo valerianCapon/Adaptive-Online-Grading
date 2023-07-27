@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}ACJ Tutorial{% endblock %}
+{% block content %}
+<link href="{% static 'css/acj_tutorial.css' %}" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="align-items-center text-center">
+        <h1 class="h1 mb-4 mt-3 text-gray-900 font-weight-bold">
+            Adaptive Comparative Judgement Tutorial
+        </h1>
+
+        <div class="card shadow text-gray-800 h3" id="explanation">
+            <div class="card-header">
+                <h4 class="h4 m-0 font-weight-bold text-primary">
+                    Please README !
+                </h4>
+            </div>
+
+            <p>
+            <div class="my-1"></div>
+            Each turn, 2 colors will be show.<br>
+            You just have to select the one you think is the darkest shade of grey and validate your choice.<br>
+            </p>
+            <p>
+                Take your time during the evaluation and do not rush it,
+                this is not a speed test. <br>
+                However, please avoid engaging in other activities,
+                as time is an important factor in this study. <br>
+                If you encounter any issues or take a break during one of your tests,
+                simply refresh the page and start again, the timer will reset.
+            </p>
+            And again thank you for your participation!
+            <div class="my-1"></div>
+
+        </div>
+    </div>
+    <div class="my-4"></div>
+    <div class="card shadow align-items-center">
+
+
+
+
+        <div>
+            <form method="post" class="text-center user">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+
+                <div class="my-4"></div>
+                <div class="wrapper">
+                    {% for radio in form.color_comparaison %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}" class="option rounded {{ radio.id_for_label }}">
+                        <div class="box grey rounded"></div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="my-4"></div>
+
+                <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded" value="Confirm">
+
+            </form>
+
+        </div>
+        <div class="my-2"></div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

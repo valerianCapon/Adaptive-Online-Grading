@@ -16,19 +16,10 @@
 
         <!-- Modal content-->
         <div class="modal-content align-items-center">
-            <div class="modal-title text-center">
-                <hr>
-                <h4> Timer will start when you click on "READY !"
-                    <hr>
-                </h4>
-            </div>
             <div class="modal-body">
 
                 <input type="submit" id="modal-btn" class="confirm-btn btn btn-google btn-lg rounded "
-                    data-dismiss="modal" value="READY !"
-                    onclick="sendReady();">
-                
-
+                    data-dismiss="modal" value="READY !" onclick="sendReady();">
             </div>
             <div class="modal-footer">
                 <hr>
@@ -52,9 +43,10 @@
 
             <p>
             <div class="my-1"></div>
-            Rubric Assessment are very simple, akin to a teacher grading a student's work.<br>
+            <!-- TODO: correct english mistakes  -->
+            Rubric Assessments are very simple, akin to a teacher grading a student's work.<br>
             In this assessment, your task is to evaluate the color value displayed,<br>
-            with 0 indicating the brightest white and 255 representing the darkest black shade.
+            with 0 indicating the darkest black and 255 representing the brightest white shade.
             </p>
             <p>
                 Take your time during the evaluation and do not rush it,
@@ -64,7 +56,6 @@
                 If you encounter any issues or take a break during one of your assessments,
                 simply refresh the page and start again, the timer will reset.
             </p>
-            And again thank you for your participation!
             <div class="my-1"></div>
 
         </div>
@@ -90,7 +81,6 @@
                     <label class="mr-sm-1 h3" for="{{ field.id_for_label }}">What shade of grey is it ? ( 0 - 255)
                     </label>
                     {% render_field form.color_judgement|append_attr:"id:numberField" class='text-gray-800 text-center form-control form-control-user' %}
-                    <!-- {{ field | add_class:'text-gray-800 text-center form-control form-control-user' }} -->
                     {% for error in field.errors %}
                     <span class="help-block">{{ error }}</span>
                     {% endfor %}
@@ -126,7 +116,10 @@
             }
         });
     }
+    //TODO : Put focus on the number field after ready button is pressed on
+
 </script>
+
 
 
 {% endblock %}

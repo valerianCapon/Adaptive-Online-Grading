@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}ACJ Tutorial{% endblock %}
+{% block content %}
+<link href="{% static 'css/acj_tutorial.css' %}" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="align-items-center text-center">
+        <h1 class="h1 mb-4 mt-3 text-gray-900 font-weight-bold">
+            Adaptive Comparative Judgement Tutorial
+        </h1>
+
+        <div class="card shadow text-gray-800 h3" id="explanation">
+            <div class="card-header">
+                <h4 class="h4 m-0 font-weight-bold text-primary">
+                    Please README !
+                </h4>
+            </div>
+
+            <p>
+            <div class="my-1"></div>
+            Each turn, 2 colors will be show.<br>
+            You just have to select the one you think is the darkest shade of grey and validate your choice.<br>
+            </p>
+            <p>
+                Take your time during the evaluation and do not rush it,
+                this is not a speed test. <br>
+                However, please avoid engaging in other activities,
+                as time is an important factor in this study. <br>
+                If you encounter any issues or take a break during one of your tests,
+                simply refresh the page and start again, the timer will reset.
+            </p>
+            And again thank you for your participation!
+            <div class="my-1"></div>
+
+        </div>
+    </div>
+    <div class="my-4"></div>
+    <div class="card shadow align-items-center text-center">
+
+        <div class="my-4"></div>
+        <div class="wrapper">
+
+            <input type="radio" name="color_comparaison" value="A" id="id_color_comparaison_0">
+            <label for="id_color_comparaison_0" class="option rounded id_color_comparaison_0">
+                <div class="box white rounded"></div>
+            </label>
+
+            <input type="radio" name="color_comparaison" value="B" id="id_color_comparaison_1">
+            <label for="id_color_comparaison_1" class="option rounded id_color_comparaison_1">
+                <div class="box black rounded"></div>
+            </label>
+
+        </div>
+
+        <div class="my-4"></div>
+        <a href="{% url 'thank_you' %}">
+            <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded" value="Confirm">
+        </a>
+        <div class="my-2"></div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

@@ -1,13 +1,16 @@
-from typing import Any, Dict
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from .forms import RubricForm
-from .models import ColorRubricAssessment, ColorSetAssessment
+from django.urls import reverse_lazy
 from django.utils.timezone import now
+
+from .forms import RubricForm, AcjForm
+from .models import ColorSetAssessment
+
 from datetime import timedelta
+from typing import Any, Dict
+
 
 # Rubric Views
 class RubricTutorialView(LoginRequiredMixin, FormView):
@@ -16,7 +19,6 @@ class RubricTutorialView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy("rubric_assessment")
 
     def form_valid(self, form: RubricForm):
-        form.show_result()
         return super().form_valid(form)
 
 
@@ -50,7 +52,7 @@ class RubricAssessmentView(LoginRequiredMixin, FormView):
               "\n color date ended =", current_color_set_assessment.date_ended,
               "\n color type =", current_color_set_assessment.type, )
 
-        context["color_to_test"] = self.color_rubric_assessment.color
+        context["color_to_test"] = self.color_rubric_assessment.color.color_code
         return context
 
     def post(self, request, *args, **kwargs):
@@ -112,6 +114,15 @@ class RubricAssessmentView(LoginRequiredMixin, FormView):
          
          
         print("SECCESSSSSSSS =", self.success_url) #TODO:supr
-        form.show_result() #TODO:supr
         return super().form_valid(form)
 
+
+
+
+class AcjTutorialView(LoginRequiredMixin, FormView):
+    form_class = AcjForm
+    template_name = 'acj_tutorial.html'
+    success_url = reverse_lazy('thank_you')
+
+    def form_valid(self, form: AcjForm):
+        return super().form_valid(form)

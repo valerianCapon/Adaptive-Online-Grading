@@ -34,7 +34,12 @@ class IndexView(LoginRequiredMixin, FormView):
 
         #TODO: SI A DEJA ETAIT CREE ALORS SKIP TUTORIAL
         if(type_of_test == 'r'):
-            self.success_url = "rubric-tutorial/" 
+            self.success_url = "rubric-tutorial/"
+        elif(type_of_test == 'a'):
+            self.success_url = "acj-tutorial/"
+        # elif(type_of_test == 't'):
+        #     self.success_url = "tcj-tutorial/"
+
         #TODO: Make a match() to redirect toward each corresponding tutorial
         return super().form_valid(form)
 
