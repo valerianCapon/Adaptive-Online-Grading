@@ -23,14 +23,18 @@ class IndexView(LoginRequiredMixin, FormView):
 
         earliest_set_assessment = ColorSetAssessment.get_earliest_from_user(current_user, type_of_test, current_color_set)
         if earliest_set_assessment is None or earliest_set_assessment.date_ended is not None:
-            print("CREATING A NEW COLOR SET ASSESSMSENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            ColorSetAssessment.objects.create(
+            print("CREATING A NEW COLOR SET ASSESSMSENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") #TODO:suppr
+            new_set_assessment = ColorSetAssessment.objects.create(
                 name = current_user.username + "---" + type_of_test + "---" + name_of_color_set_selected + "---" + str(current_datetime),
                 type = type_of_test,
                 color_set = current_color_set,
                 judge = current_user,
                 date_started = current_datetime,
-            ).create_assessments()
+            )
+            new_set_assessment.nb_of_assessement_max = new_set_assessment.get_nb_max_of_assessment()
+            new_set_assessment.save
+            new_set_assessment.create_assessments()
+        print("OH ON EST PASSER PAR LA et le easliest set assessment est :",earliest_set_assessment)
 
         #TODO: SI A DEJA ETAIT CREE ALORS SKIP TUTORIAL
         if(type_of_test == 'r'):
@@ -40,7 +44,6 @@ class IndexView(LoginRequiredMixin, FormView):
         # elif(type_of_test == 't'):
         #     self.success_url = "tcj-tutorial/"
 
-        #TODO: Make a match() to redirect toward each corresponding tutorial
         return super().form_valid(form)
 
 

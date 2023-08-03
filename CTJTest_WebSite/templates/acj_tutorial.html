@@ -23,7 +23,7 @@
             <p>
             <div class="my-1"></div>
             Each turn, 2 colors will be show.<br>
-            You just have to select the one you think is the darkest shade of grey and validate your choice.<br>
+            You just have to select the one you think is the lighest shade of grey and validate your choice.<br>
             </p>
             <p>
                 Take your time during the evaluation and do not rush it,
@@ -40,12 +40,15 @@
     </div>
     <div class="my-4"></div>
     <div class="card shadow align-items-center text-center">
+        <div class="my-1"></div>
+        <div class="mr-sm-1 h3">
+            Which color is the lightest ? 
+        </div>
+        <div class="my-1"></div>
 
-        <div class="my-4"></div>
         <div class="wrapper">
-
             <input type="radio" name="color_comparaison" value="A" id="id_color_comparaison_0">
-            <label for="id_color_comparaison_0" class="option rounded id_color_comparaison_0">
+            <label for="id_color_comparaison_0" class="option rounded id_color_comparaison_0">    
                 <div class="box white rounded"></div>
             </label>
 
@@ -57,7 +60,7 @@
         </div>
 
         <div class="my-4"></div>
-        <a href="{% url 'thank_you' %}">
+        <a href="{% url 'acj_assessment' %}">
             <input type="submit" id="confirm-btn" class="btn btn-google btn-lg rounded" value="Confirm">
         </a>
         <div class="my-2"></div>

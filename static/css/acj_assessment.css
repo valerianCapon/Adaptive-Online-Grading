@@ -188,3 +188,27 @@ input[type="radio"] {
 #id_color_comparaison_1:checked:checked~.id_color_comparaison_1 span {
     color: #fdf6e3;
 }
+
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fdf6e3;
+    background-clip: padding-box;
+    border: 3px solid rgba(0,0,0,.2);
+    border-radius: .4rem;
+    outline: 0;
+  }
+
+
+#modal-btn {
+    margin-top: 3rem;
+    padding: 3rem 2.5rem;
+    font-size: 3rem;
+    line-height: 2.25rem;
+    border-radius: .8rem;
+
+}

@@ -46,10 +46,11 @@ def assign_id_to_colors(colors):
 # colors = [ (2, 'G0', 0), (0, 'G5',63), (4, 'G1', 126), (1,'G2', 189), (3,'G3', 255),]
 
 
-colors = [ ('G0', 0), ('G1', 31), ('G2', 62), ('G3', 94),
-           ('G7', 128),
-             ('G8', 166), ('G9',200), ('G10',255)]
+# colors = [ ('G0', 0), ('G1', 31), ('G2', 62), ('G3', 94),
+#            ('G7', 128),
+#              ('G8', 166), ('G9',200), ('G10',255)]
 
+colors = [('black', 0), ('g1', 160), ('g2', 106), ('white', 255)]
 
 nb_colors = len(colors)
 random.shuffle(colors) #We are not supposed to have colors sorted nicely in a increasing way
@@ -62,7 +63,7 @@ for i in range(0,nb_colors):
     true_values[colors[i][0]] = colors[i][2]
 
 
-print("true valeis are ",true_values)
+print("true values are ",true_values)
 estimated_values = []
 estimated_proba = np.zeros((nb_colors,nb_colors),dtype=np.float64)
 
@@ -91,7 +92,7 @@ while i < nb_colors-1:
     assessments.append(assessment_done)
     i += 2
 if ( nb_colors%2 ) != 0 :  #If there is a odd number of colors
-    assessment_done = assessment_result(colors[-1][0], colors[-2][0], colors) #Last VS Last but one
+    assessment_done = assessment_result(colors[-1][0], colors[-2][0], colors) #Last versus Last but one
     assessments.append(assessment_done)
 
 

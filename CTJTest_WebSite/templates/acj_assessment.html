@@ -3,14 +3,33 @@
 {% load widget_tweaks %}
 
 
-{% block title %}ACJ Tutorial{% endblock %}
+{% block title %}ACJ{% endblock %}
 {% block content %}
-<link href="{% static 'css/acj_tutorial.css' %}" rel="stylesheet">
+<link href="{% static 'css/acj_assessment.css' %}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content align-items-center">
+            <div class="modal-body">
+
+                <input type="submit" id="modal-btn" class="confirm-btn btn btn-google btn-lg rounded "
+                    data-dismiss="modal" value="READY !" onclick="sendReady();">
+            </div>
+            <div class="modal-footer">
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="align-items-center text-center">
         <h1 class="h1 mb-4 mt-3 text-gray-900 font-weight-bold">
-            Adaptive Comparative Judgement Tutorial
+            Adaptive Comparative Judgement
         </h1>
 
         <div class="card shadow text-gray-800 h3" id="explanation">
@@ -23,7 +42,7 @@
             <p>
             <div class="my-1"></div>
             Each turn, 2 colors will be show.<br>
-            You just have to select the one you think is the darkest shade of grey and validate your choice.<br>
+            You just have to select the one you think is the lighest shade of grey and validate your choice.<br>
             </p>
             <p>
                 Take your time during the evaluation and do not rush it,
@@ -40,10 +59,11 @@
     </div>
     <div class="my-4"></div>
     <div class="card shadow align-items-center">
-
-
-
-
+        <div class="my-1"></div>
+        <div class="mr-sm-1 h3">
+            Which color is the lightest ? 
+        </div>
+        <div class="my-1"></div>
         <div>
             <form method="post" class="text-center user">
                 {% csrf_token %}
@@ -53,12 +73,16 @@
 
                 <div class="my-4"></div>
                 <div class="wrapper">
-                    {% for radio in form.color_comparaison %}
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}" class="option rounded {{ radio.id_for_label }}">
-                        <div class="box grey rounded"></div>
+                    <input type="radio" name="color_comparaison" value="A" id="id_color_comparaison_0" required="">
+                    <label for="id_color_comparaison_0" class="option rounded id_color_comparaison_0">    
+                        <div class="box rounded" style="background-color:{{color_A}}"></div>
                     </label>
-                    {% endfor %}
+        
+                    <input type="radio" name="color_comparaison" value="B" id="id_color_comparaison_1" required="">
+                    <label for="id_color_comparaison_1" class="option rounded id_color_comparaison_1">
+                        <div class="box rounded" style="background-color:{{color_B}}"></div>
+                    </label>
+        
                 </div>
 
                 <div class="my-4"></div>
@@ -73,6 +97,28 @@
 
 </div>
 
+<!-- ====================================    JS    ==================================== --> 
 
+<script>
+    $(window).on('load', function () {
+        $('#myModal').modal({ backdrop: 'static', keyboard: false, show: true });
+    });
+    function sendReady() {
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+                ready: "start",
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function () {
+                console.log("post is a success")
+            },
+            error: function (xhr, errmsg, err) {
+                location.reload();
+            }
+        });
+    }
+</script>
 
 {% endblock %}
