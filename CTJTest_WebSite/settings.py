@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-u_ykh-)n&2%*84qqd)j*k^f(1x(e#__@$7xvoy+knzh093+1yk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'www.tcdrail.com']
 
 
 # Application definition
