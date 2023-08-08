@@ -38,9 +38,9 @@ def assign_id_to_colors(colors):
 
 # DATA :
 """  ( id_item, color_name, color_value )                     """
-# colors = [ (7,'G0', 0), (9,'G1', 25), (5,'G2', 50), (10,'G3', 75),
-#            (8,'G4', 100), (2,'G5', 125), (6,'G6', 150), (0,'G7', 175),
-#              (4,'G8', 200), (1,'G9',225), (3,'G10',255)]
+colors = [ (7,'G0', 0), (9,'G1', 25), (5,'G2', 50), (10,'G3', 75),
+           (8,'G4', 100), (2,'G5', 125), (6,'G6', 150), (0,'G7', 175),
+             (4,'G8', 200), (1,'G9',225), (3,'G10',255)]
 
 
 # colors = [ (2, 'G0', 0), (0, 'G5',63), (4, 'G1', 126), (1,'G2', 189), (3,'G3', 255),]
@@ -50,12 +50,12 @@ def assign_id_to_colors(colors):
 #            ('G7', 128),
 #              ('G8', 166), ('G9',200), ('G10',255)]
 
-colors = [('black', 0), ('g1', 160), ('g2', 106), ('white', 255)]
+#colors = [('black', 0), ('g1', 160), ('g2', 106), ('white', 255)]
 
 nb_colors = len(colors)
 random.shuffle(colors) #We are not supposed to have colors sorted nicely in a increasing way
 
-colors = assign_id_to_colors(colors)
+# colors = assign_id_to_colors(colors)
 
 # ESTIMATE VALUE COMPUTING : 
 true_values = [0]*nb_colors

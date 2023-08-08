@@ -23,7 +23,7 @@ import choix
  - "new_comparison" : ("white", "grey50") or None  #the new generated comparison to realize 
  - "estimated_colors" : [("black",3), ("white",255), ("grey150", 147)... ] or None  #The estimated values of the colors
  """
-def acj_iteration(colors, comparisons, SSR_max=0.9):
+def acj_iteration(colors, comparisons, SSR_max=0.95):
     result = {
                 "finished": None,
                 "SSR": None,
